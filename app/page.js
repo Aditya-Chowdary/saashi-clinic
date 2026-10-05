@@ -17,8 +17,6 @@ import sunil from '../public/images/Dr.sunil.jpeg';
 import clinic from '../public/images/clinic.jpeg';
 
 const src = (m) => (typeof m === 'object' && m !== null ? m.src : m);
-
-/* ---------- Content (edit here) ---------- */
 const PHONE = '919100192367';
 const wa = (msg = 'Hello Saashi Clinic, I would like to book an appointment.') =>
   `https://api.whatsapp.com/send?phone=${PHONE}&text=${encodeURIComponent(msg)}`;
@@ -208,53 +206,7 @@ function OpenBadge() {
   );
 }
 
-/* Interactive "which doctor?" helper */
-function DoctorFinder() {
-  const [sel, setSel] = useState(null);
-  const d = sel !== null ? doctors[concerns[sel].who] : null;
-  return (
-    <div className="mx-auto grid max-w-5xl gap-6 rounded-[2rem] border border-[#EAE6DF] bg-white p-5 shadow-xl shadow-[#4A2E1B]/5 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
-      <div className="space-y-4">
-        <p className="text-sm font-bold text-slate-500">Tap what is troubling you</p>
-        <div className="flex flex-wrap gap-2.5">
-          {concerns.map((c, i) => (
-            <button key={c.label} onClick={() => setSel(i)} aria-pressed={sel === i}
-              className={`rounded-full border-2 px-4 py-2.5 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4A2E1B] ${sel === i ? 'border-[#D9531D] bg-[#D9531D] text-white' : 'border-[#EAE6DF] bg-[#FCFAF6] hover:border-[#D9531D]/50'}`}>
-              {c.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="min-h-[190px] rounded-3xl bg-[#FCFAF6] p-5" aria-live="polite">
-        <AnimatePresence mode="wait">
-          {d ? (
-            <motion.div key={sel} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="space-y-4">
-              <div className="flex items-center gap-4">
-                <img src={d.img} alt={d.name} className="h-16 w-16 rounded-2xl object-cover object-top" />
-                <div>
-                  <p className="text-xs font-bold text-slate-500">You may want to see</p>
-                  <p className="text-lg font-extrabold">{d.name}</p>
-                  <p className="text-sm text-[#D9531D]">{d.short}</p>
-                </div>
-              </div>
-              <a href={wa(`Hello Saashi Clinic, I would like to see ${d.name} about: ${concerns[sel].label.toLowerCase()}.`)} target="_blank" rel="noopener noreferrer"
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#D9531D] text-sm font-black text-white transition hover:bg-[#c24a19]">
-                <MessageCircle className="h-4 w-4" /> Book with {d.name}
-              </a>
-            </motion.div>
-          ) : (
-            <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex h-full min-h-[150px] flex-col items-center justify-center gap-2 text-center text-sm text-slate-500">
-              <Activity className="h-7 w-7 text-[#D9531D]" />
-              Pick a concern and we will point you to the right doctor.
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-const section = 'px-5 py-16 sm:px-6 md:py-24';
+const section = 'px-5 py-14 sm:px-6 md:py-24';
 
 /* ---------- Page ---------- */
 export default function Home() {
@@ -273,16 +225,16 @@ export default function Home() {
   const r = reviews[cur];
 
   return (
-    <div className="overflow-x-hidden bg-[#FCFAF6] pb-20 text-[#4A2E1B] md:pb-0">
+    <div className="overflow-x-hidden bg-[#FCFAF6] pb-24 text-[#4A2E1B] md:pb-0">
       <GrowthChart />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#FCFAF6] to-[#EAE6DF]/40 px-5 pb-24 pt-10 sm:px-6 md:pb-32 md:pt-16">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#FCFAF6] to-[#EAE6DF]/40 px-5 pb-24 pt-8 sm:px-6 md:pb-32 md:pt-16">
         <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:radial-gradient(#4A2E1B_1px,transparent_1px)] [background-size:22px_22px]" />
         <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-[#D9531D]/10 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[#F5A623]/15 blur-3xl" />
 
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <motion.div initial="hidden" animate="visible" variants={stagger} className="relative mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="space-y-6 text-center lg:text-left">
             <motion.div variants={item} className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
               <span className="inline-flex items-center gap-2 rounded-full bg-[#D9531D]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#D9531D]">
@@ -290,7 +242,7 @@ export default function Home() {
               </span>
               <OpenBadge />
             </motion.div>
-            <motion.h1 variants={item} className="text-4xl font-black leading-[1.08] tracking-tight sm:text-6xl xl:text-7xl">
+            <motion.h1 variants={item} className="text-[2rem] font-black leading-[1.08] tracking-tight min-[360px]:text-4xl sm:text-6xl xl:text-7xl">
               Healthy kids.<br />Strong bones.<br /><span className="text-[#D9531D]">Real answers.</span>
             </motion.h1>
             <motion.div variants={item}><Heartbeat reduce={reduce} /></motion.div>
@@ -303,45 +255,28 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Single clinic photo */}
-          <motion.div variants={item} className="relative mx-auto w-full max-w-sm pb-10 sm:max-w-md lg:max-w-lg">
-            {/* offset outline frame */}
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2.5rem] rounded-t-[12rem] border-2 border-[#D9531D]/40" aria-hidden />
-
-            {/* main clinic photo */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] rounded-t-[12rem] border-[6px] border-white shadow-2xl shadow-[#4A2E1B]/20">
+          {/* Clinic photo */}
+          <motion.div variants={item} className="relative mx-auto w-full max-w-sm sm:max-w-md lg:ml-auto lg:mr-0 lg:max-w-[30rem]">
+            <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-to-br from-[#F5A623]/30 via-[#D9531D]/15 to-transparent blur-2xl" aria-hidden />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl shadow-[#4A2E1B]/20">
               <motion.img
                 src={IMG.clinic}
-                onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = IMG.clinicFallback; }}
-                alt="Saashi Clinic reception and consultation area"
+                alt="Saashi Clinic building at Isakhathota Junction, Visakhapatnam"
                 className="h-full w-full object-cover"
-                initial={{ scale: reduce ? 1 : 1.12 }}
+                initial={{ scale: reduce ? 1 : 1.08 }}
                 animate={{ scale: 1 }}
-                transition={{ duration: 1.8, ease: 'easeOut' }}
+                transition={{ duration: 1.6, ease: 'easeOut' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#4A2E1B]/40 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#4A2E1B]/45 to-transparent" />
+              <a href={MAPS} target="_blank" rel="noopener noreferrer" className="group absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl bg-white/90 p-3 shadow-lg backdrop-blur transition hover:bg-white sm:inset-x-4 sm:bottom-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D9531D] text-white"><MapPin className="h-5 w-5" /></span>
+                <span className="min-w-0 flex-1 leading-tight">
+                  <span className="block text-sm font-extrabold">Saashi Clinic</span>
+                  <span className="block truncate text-xs text-slate-600">Isakhathota Junction, Visakhapatnam</span>
+                </span>
+                <span className="inline-flex shrink-0 items-center gap-1 text-xs font-extrabold text-[#D9531D]"><span className="hidden sm:inline">Directions</span><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+              </a>
             </div>
-
-            {/* floating card: space */}
-            <motion.div
-              animate={reduce ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -left-3 top-24 flex items-center gap-3 rounded-2xl border border-[#EAE6DF] bg-white px-3.5 py-3 shadow-xl sm:-left-8"
-            >
-              <span className="rounded-xl bg-[#F5A623]/15 p-2 text-[#F5A623]"><Smile className="h-5 w-5" /></span>
-              <span className="text-xs font-bold leading-tight">Calm, child-friendly<br /><span className="font-medium text-slate-500">consultation space</span></span>
-            </motion.div>
-
-            {/* floating card: location */}
-            <motion.a
-              href={MAPS} target="_blank" rel="noopener noreferrer"
-              animate={reduce ? {} : { y: [0, 8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -right-3 bottom-4 flex items-center gap-3 rounded-2xl bg-[#4A2E1B] px-4 py-3 text-white shadow-xl sm:-right-8"
-            >
-              <span className="rounded-xl bg-white/10 p-2 text-[#F5A623]"><MapPin className="h-5 w-5" /></span>
-              <span className="text-xs font-bold leading-tight">Saashi Clinic<br /><span className="font-medium text-[#EAE6DF]/80">Isakhathota Junction, Vizag</span></span>
-            </motion.a>
           </motion.div>
         </motion.div>
       </section>
@@ -456,7 +391,7 @@ export default function Home() {
           <div className="grid gap-5 sm:grid-cols-2">
             {doctors.map((d, i) => (
               <Reveal key={d.name} delay={i * 0.1}>
-                <Link href={LINKS.about} className="group flex items-center gap-5 rounded-3xl border border-white/10 bg-white/5 p-4 transition hover:-translate-y-1 hover:border-[#F5A623]/50 hover:bg-white/10">
+                <Link href={LINKS.about} className="group flex flex-col items-start gap-4 rounded-3xl border border-white/10 min-[420px]:flex-row min-[420px]:items-center min-[420px]:gap-5 bg-white/5 p-4 transition hover:-translate-y-1 hover:border-[#F5A623]/50 hover:bg-white/10">
                   <img src={d.img} alt={d.name} loading="lazy" className="h-24 w-24 shrink-0 rounded-2xl object-cover object-top sm:h-28 sm:w-28" />
                   <div className="min-w-0">
                     <h3 className="text-lg font-extrabold">{d.name}</h3>
@@ -575,9 +510,9 @@ export default function Home() {
       </a>
 
       {/* Mobile sticky action bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-[#EAE6DF] bg-white/95 p-3 backdrop-blur md:hidden">
-        <a href="tel:+919100192367" className="inline-flex h-10 items-center justify-center gap-2 rounded-full border-2 border-[#4A2E1B] text-sm font-black"><Phone className="h-4 w-4" />Call</a>
-        <a href={WA} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#D9531D] text-sm font-black text-white"><MessageCircle className="h-4 w-4" />WhatsApp</a>
+      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-[#EAE6DF] bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
+        <a href="tel:+919100192367" className="inline-flex h-11 items-center justify-center gap-2 rounded-full border-2 border-[#4A2E1B] text-sm font-black"><Phone className="h-4 w-4" />Call</a>
+        <a href={WA} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#D9531D] text-sm font-black text-white"><MessageCircle className="h-4 w-4" />WhatsApp</a>
       </div>
     </div>
   );
