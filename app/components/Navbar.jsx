@@ -9,7 +9,8 @@ import {
   Home, Info, Stethoscope, Mail, MapPin,
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from 'framer-motion';
-import Logo from './Logo';
+import logoImg from '../../public/images/logo.png';
+const logoSrc = typeof logoImg === 'object' && logoImg !== null ? logoImg.src : logoImg;
 
 const PHONE = '919100192367';
 const WA = `https://api.whatsapp.com/send?phone=${PHONE}&text=Hello%20Saashi%20Clinic,%20I%20would%20like%20to%20book%20an%20appointment.`;
@@ -76,7 +77,11 @@ export default function Navbar() {
 
           {/* Brand */}
           <Link href="/" aria-label="Saashi Clinic home" className={`flex items-center gap-2.5 min-w-0 rounded-xl ${focus}`}>
-            <Logo className={`shrink-0 transition-all duration-300 ${solid ? 'w-8 h-8' : 'w-9 h-9 md:w-10 md:h-10'}`} />
+            <img 
+              src={logoSrc} 
+              alt="Saashi Clinic Logo" 
+              className={`shrink-0 transition-all duration-300 object-contain ${solid ? 'w-15 h-15' : 'w-15 h-15 md:w-15 md:h-15'}`} 
+            />
             <span className="flex flex-col leading-tight min-w-0">
               <span className="font-extrabold text-sm md:text-lg tracking-tight uppercase text-[#4A2E1B] truncate">Saashi Clinic</span>
               <span className="text-[8px] md:text-[9px] tracking-wider md:tracking-widest uppercase font-bold text-[#D9531D] truncate">Paediatric &amp; Orthopaedics</span>
@@ -95,13 +100,8 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Two separate contact buttons */}
+            {/* Separate contact button */}
             <div className="flex items-center gap-2 ml-2 lg:ml-3">
-              {/* <a href={TEL} aria-label="Call 9100192367"
-                className={`inline-flex items-center justify-center gap-2 h-10 w-10 lg:w-auto lg:px-4 rounded-full border-2 border-[#4A2E1B] text-[#4A2E1B] text-xs font-extrabold transition-colors hover:bg-[#4A2E1B] hover:text-white ${focus}`}>
-                <Phone className="w-4 h-4" />
-                <span className="hidden lg:inline">9100192367</span>
-              </a> */}
               <a href={WA} target="_blank" rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 h-10 px-4 lg:px-5 rounded-full bg-[#D9531D] text-white text-xs font-extrabold shadow-md shadow-[#D9531D]/25 transition-all hover:bg-[#c24a19] hover:-translate-y-0.5 ${focus}`}>
                 <MessageCircle className="w-4 h-4" />

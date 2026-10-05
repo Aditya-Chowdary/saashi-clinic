@@ -3,7 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Phone, MapPin, ArrowUpRight, ArrowUp, MessageCircle } from 'lucide-react';
-import Logo from './Logo';
+import logoImg from '../../public/images/logo.png';
+
+// Handle Next.js static asset object wrapper resolution safely
+const logoSrc = typeof logoImg === 'object' && logoImg !== null ? logoImg.src : logoImg;
 
 const WA_LINK =
   'https://wa.me/919100192367?text=Hello%20Saashi%20Clinic,%20I%20would%20like%20to%20book%20an%20appointment.';
@@ -86,7 +89,7 @@ export default function Footer() {
           <div className="sf-reveal space-y-4 lg:col-span-1" style={{ '--i': 1 }}>
             <div className="flex items-center gap-3">
               <div className="sf-logo rounded-xl">
-                <Logo className="h-11 w-11" />
+                <img src={logoSrc} alt="" className="h-11 w-11 object-contain" />
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-extrabold uppercase tracking-tight text-white">
