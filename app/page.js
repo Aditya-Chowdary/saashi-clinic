@@ -174,14 +174,14 @@ function OpenBadge() {
 /* ====================== HERO ====================== */
 function RotatingBadge({ reduce }) {
   return (
-    <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-xl shadow-[#4A2E1B]/15 sm:h-28 sm:w-28">
+    <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-xl shadow-[#4A2E1B]/15 sm:h-28 sm:w-28">
       <motion.svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full" animate={reduce ? {} : { rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }} aria-hidden>
         <defs><path id="heroRing" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" /></defs>
         <text fill="#4A2E1B" fontSize="10" fontWeight="800">
           <textPath href="#heroRing" textLength="280" lengthAdjust="spacing">PAEDIATRICS • ORTHOPAEDICS •</textPath>
         </text>
       </motion.svg>
-      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#D9531D] text-white sm:h-12 sm:w-12"><HeartHandshake className="h-5 w-5 sm:h-6 sm:w-6" /></span>
+      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#D9531D] text-white sm:h-12 sm:w-12"><HeartHandshake className="h-4.5 w-4.5 sm:h-6 sm:w-6" /></span>
     </div>
   );
 }
@@ -189,11 +189,11 @@ function RotatingBadge({ reduce }) {
 function FloatChip({ icon: Icon, title, sub, className, delay, reduce, style }) {
   return (
     <motion.div style={style} initial={{ opacity: 0, scale: reduce ? 1 : 0.7 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay, ease: 'easeOut' }} className={`absolute z-20 ${className}`}>
-      <motion.div animate={reduce ? {} : { y: [0, -9, 0] }} transition={{ duration: 5 + delay, repeat: Infinity, ease: 'easeInOut' }} className="flex items-center gap-2.5 rounded-2xl bg-white/95 p-2.5 pr-4 shadow-xl shadow-[#4A2E1B]/15 backdrop-blur">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D9531D]/10 text-[#D9531D]"><Icon className="h-5 w-5" /></span>
+      <motion.div animate={reduce ? {} : { y: [0, -9, 0] }} transition={{ duration: 5 + delay, repeat: Infinity, ease: 'easeInOut' }} className="flex items-center gap-2 sm:gap-2.5 rounded-xl sm:rounded-2xl bg-white/95 p-2 sm:p-2.5 pr-3 sm:pr-4 shadow-xl shadow-[#4A2E1B]/15 backdrop-blur">
+        <span className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-[#D9531D]/10 text-[#D9531D]"><Icon className="h-4 w-4 sm:h-5 sm:w-5" /></span>
         <span className="leading-tight">
-          <span className="block text-xs font-extrabold sm:text-sm">{title}</span>
-          <span className="block text-[11px] text-slate-500 sm:text-xs">{sub}</span>
+          <span className="block text-xs font-extrabold">{title}</span>
+          <span className="block text-[10px] text-slate-500 sm:text-xs">{sub}</span>
         </span>
       </motion.div>
     </motion.div>
@@ -254,19 +254,21 @@ function Hero() {
             ))}
           </h1>
 
-          {/* <motion.div {...fade(0.6)}><Heartbeat reduce={reduce} /></motion.div> */}
           <motion.p {...fade(0.7)} className="mx-auto max-w-lg text-base leading-relaxed text-slate-600 md:text-lg lg:mx-0">
             A paediatrician and an orthopaedic surgeon, together in Visakhapatnam, with senior teaching experience and practical clinical skill.
           </motion.p>
+          
+          {/* Hero Buttons: Reduced size on smaller screens */}
           <motion.div {...fade(0.85)} className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-            <a href={WA} target="_blank" rel="noopener noreferrer" className="group relative inline-flex h-14 items-center justify-center gap-2.5 overflow-hidden rounded-full bg-[#D9531D] px-8 text-sm font-black text-white shadow-lg shadow-[#D9531D]/30 transition hover:-translate-y-0.5 hover:bg-[#c24a19] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4A2E1B]">
+            <a href={WA} target="_blank" rel="noopener noreferrer" className="group relative inline-flex h-11 sm:h-14 items-center justify-center gap-2 overflow-hidden rounded-full bg-[#D9531D] px-5 sm:px-8 text-xs sm:text-sm font-black text-white shadow-lg shadow-[#D9531D]/30 transition hover:-translate-y-0.5 hover:bg-[#c24a19] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4A2E1B]">
               <span className="absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/25 transition-transform duration-700 group-hover:translate-x-[400%]" aria-hidden />
-              <MessageCircle className="relative h-4 w-4" /><span className="relative">Book on WhatsApp</span>
+              <MessageCircle className="relative h-3.5 w-3.5 sm:h-4 sm:w-4" /><span className="relative">Book on WhatsApp</span>
             </a>
-            <Link href={LINKS.about} className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-[#4A2E1B] px-8 text-sm font-black transition hover:bg-[#4A2E1B] hover:text-[#FCFAF6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D]">
-              Meet our doctors <ArrowRight className="h-4 w-4" />
+            <Link href={LINKS.about} className="inline-flex h-11 sm:h-14 items-center justify-center gap-2 rounded-full border-2 border-[#4A2E1B] px-5 sm:px-8 text-xs sm:text-sm font-black transition hover:bg-[#4A2E1B] hover:text-[#FCFAF6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D]">
+              Meet our doctors <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
           </motion.div>
+          
           <motion.ul {...fade(1.05)} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 lg:justify-start">
             {heroFacts.map(({ icon: Icon, t }) => (
               <li key={t} className="flex items-center gap-2 text-xs font-bold text-[#4A2E1B]/80 sm:text-sm"><Icon className="h-4 w-4 text-[#D9531D]" />{t}</li>
@@ -296,16 +298,18 @@ function Hero() {
                 <motion.div aria-hidden style={{ skewX: -12 }} initial={{ x: '-150%' }} animate={{ x: '450%' }} transition={{ duration: 1.6, delay: 1.4, ease: 'easeInOut', repeat: Infinity, repeatDelay: 7 }} className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
               )}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#4A2E1B]/50 to-transparent" />
-              <motion.a href={MAPS} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.2, ease: EASE }} className="group absolute inset-x-3 bottom-3 flex items-center gap-3 rounded-2xl bg-white/90 p-3 shadow-lg backdrop-blur transition hover:bg-white sm:inset-x-4 sm:bottom-4">
-                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D9531D] text-white">
-                  <span className="absolute inset-0 animate-ping rounded-xl bg-[#D9531D]/40 motion-reduce:hidden" />
-                  <MapPin className="relative h-5 w-5" />
+              
+              {/* Reduced size maps badge trigger */}
+              <motion.a href={MAPS} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.2, ease: EASE }} className="group absolute inset-x-2 bottom-2 sm:inset-x-4 sm:bottom-4 flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl bg-white/95 p-2 sm:p-3 shadow-lg backdrop-blur transition hover:bg-white">
+                <span className="relative flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-[#D9531D] text-white">
+                  <span className="absolute inset-0 animate-ping rounded-lg sm:rounded-xl bg-[#D9531D]/40 motion-reduce:hidden" />
+                  <MapPin className="relative h-4 w-4 sm:h-5 sm:w-5" />
                 </span>
-                <span className="min-w-0 flex-1 leading-tight">
-                  <span className="block text-sm font-extrabold">Saashi Clinic</span>
-                  <span className="block truncate text-xs text-slate-600">Isakhathota Junction, Visakhapatnam</span>
+                <span className="min-w-0 flex-1 leading-tight text-left">
+                  <span className="block text-xs sm:text-sm font-extrabold">Saashi Clinic</span>
+                  <span className="block truncate text-[10px] sm:text-xs text-slate-600">Isakhathota, Visakhapatnam</span>
                 </span>
-                <span className="inline-flex shrink-0 items-center gap-1 text-xs font-extrabold text-[#D9531D]"><span className="hidden sm:inline">Directions</span><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                <span className="inline-flex shrink-0 items-center gap-1 text-[10px] sm:text-xs font-extrabold text-[#D9531D]"><span className="hidden sm:inline">Directions</span><ArrowRight className="h-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" /></span>
               </motion.a>
             </motion.div>
           </motion.div>
@@ -328,8 +332,14 @@ function QuickActions() {
       <Reveal className="mx-auto grid max-w-5xl gap-1 rounded-3xl border border-[#EAE6DF] bg-white p-3 shadow-xl shadow-[#4A2E1B]/10 sm:grid-cols-3 sm:gap-3">
         {quick.map(({ icon: Icon, t, d, href }) => (
           <a key={t} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="group flex items-center gap-3 rounded-2xl p-3 transition hover:bg-[#FCFAF6]">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D9531D]/10 text-[#D9531D] transition group-hover:bg-[#D9531D] group-hover:text-white"><Icon className="h-5 w-5" /></span>
-            <span className="min-w-0"><span className="block text-sm font-extrabold">{t}</span><span className="block truncate text-xs text-slate-500">{d}</span></span>
+            {/* Reduced icon scale on mobile */}
+            <span className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-[#D9531D]/10 text-[#D9531D] transition group-hover:bg-[#D9531D] group-hover:text-white">
+              <Icon className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+            </span>
+            <span className="min-w-0 text-left">
+              <span className="block text-sm font-extrabold">{t}</span>
+              <span className="block truncate text-xs text-slate-500">{d}</span>
+            </span>
           </a>
         ))}
       </Reveal>
@@ -360,15 +370,27 @@ function DoctorFinder() {
         <Reveal className="grid gap-8 rounded-[2rem] border border-[#EAE6DF] bg-white p-5 shadow-lg shadow-[#4A2E1B]/5 sm:p-8 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-10">
           <div>
             <p className="mb-3 text-center text-sm font-bold text-slate-500 lg:text-left">Tap what sounds like you</p>
+            {/* Reduced button styling on mobile viewports */}
             <div className="flex flex-wrap justify-center gap-2.5 lg:justify-start">
               {concerns.map((c, i) => (
-                <button key={c.label} onClick={() => setSel(i)} aria-pressed={sel === i} className={`rounded-full border-2 px-4 py-2.5 text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D] ${sel === i ? 'border-[#D9531D] bg-[#D9531D] text-white shadow-md shadow-[#D9531D]/25' : 'border-[#EAE6DF] hover:border-[#D9531D]/50'}`}>{c.label}</button>
+                <button 
+                  key={c.label} 
+                  onClick={() => setSel(i)} 
+                  aria-pressed={sel === i} 
+                  className={`rounded-full border-2 px-3 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D] ${
+                    sel === i 
+                      ? 'border-[#D9531D] bg-[#D9531D] text-white shadow-md shadow-[#D9531D]/25' 
+                      : 'border-[#EAE6DF] hover:border-[#D9531D]/50'
+                  }`}
+                >
+                  {c.label}
+                </button>
               ))}
             </div>
           </div>
           <AnimatePresence mode="wait">
             <motion.div key={d.name} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: 0.3 }} className="rounded-3xl bg-[#FCFAF6] p-5">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 text-left">
                 <img src={d.img} alt={d.name} className="h-20 w-20 shrink-0 rounded-2xl object-cover object-top" />
                 <div className="min-w-0">
                   <p className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#D9531D]"><Icon className="h-3.5 w-3.5" />{d.short}</p>
@@ -376,7 +398,16 @@ function DoctorFinder() {
                   <p className="text-sm text-slate-600">{d.role}</p>
                 </div>
               </div>
-              <a href={wa(`Hello Saashi Clinic, I would like to book an appointment with ${d.name} for: ${concerns[sel].label}.`)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#D9531D] text-sm font-black text-white transition hover:bg-[#c24a19]"><MessageCircle className="h-4 w-4" />Book with {d.name}</a>
+              {/* Reduced responsive height on smaller screens */}
+              <a 
+                href={wa(`Hello Saashi Clinic, I would like to book an appointment with ${d.name} for: ${concerns[sel].label}.`)} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="mt-4 inline-flex h-10 sm:h-12 w-full items-center justify-center gap-2 rounded-full bg-[#D9531D] text-xs sm:text-sm font-black text-white transition hover:bg-[#c24a19]"
+              >
+                <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                Book with {d.name}
+              </a>
             </motion.div>
           </AnimatePresence>
         </Reveal>
@@ -408,7 +439,7 @@ function Specialities() {
                     <li key={p} className="flex items-center gap-3 font-bold"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#D9531D] text-white"><Check className="h-3.5 w-3.5" /></span>{p}</li>
                   ))}
                 </ul>
-                <div><Link href={LINKS.about} className="group inline-flex items-center gap-2 font-extrabold text-[#D9531D]">Meet {s.who}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link></div>
+                <div><Link href={LINKS.about} className="group inline-flex items-center gap-2 font-extrabold text-[#D9531D] text-sm sm:text-base">Meet {s.who}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link></div>
               </Reveal>
             </article>
           );
@@ -436,7 +467,7 @@ function WhyUs({ reduce }) {
           <div className="space-y-3">
             {why.map(({ icon: Icon, t, d }, i) => (
               <Reveal key={t} delay={i * 0.08}>
-                <div className="group flex items-start gap-4 rounded-2xl border border-transparent p-4 transition hover:border-[#EAE6DF] hover:bg-white hover:shadow-md">
+                <div className="group flex items-start text-left gap-4 rounded-2xl border border-transparent p-4 transition hover:border-[#EAE6DF] hover:bg-white hover:shadow-md">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#D9531D]/10 text-[#D9531D] transition group-hover:bg-[#D9531D] group-hover:text-white"><Icon className="h-6 w-6" /></span>
                   <div><h3 className="font-extrabold">{t}</h3><p className="mt-0.5 text-sm leading-relaxed text-slate-600">{d}</p></div>
                 </div>
@@ -488,7 +519,7 @@ function Team() {
                 </div>
 
                 {/* Content Section */}
-                <div className="flex items-center justify-between gap-4 px-3 py-5">
+                <div className="flex items-center justify-between gap-4 px-3 py-5 text-left">
                   <div className="min-w-0">
                     <h3 className="text-lg font-extrabold tracking-tight text-[#4A2E1B] transition-colors duration-300 group-hover:text-[#D45225]">
                       {d.name}
@@ -552,7 +583,7 @@ function Reviews() {
                   <img src={r.img} alt={r.tag} className="absolute inset-0 h-full w-full object-cover" />
                   <span className="absolute left-4 top-4 rounded-full bg-[#F5A623] px-3 py-1 text-xs font-black text-[#4A2E1B]">{r.tag}</span>
                 </div>
-                <div className="flex flex-col justify-center gap-4 p-7 sm:p-10">
+                <div className="flex flex-col justify-center gap-4 p-7 sm:p-10 text-left">
                   <Quote className="h-8 w-8 text-[#D9531D]" />
                   <p className="text-lg font-semibold leading-relaxed sm:text-xl">{r.quote}</p>
                   <span className="text-sm font-extrabold text-[#D9531D]">{r.author}</span>
@@ -560,12 +591,17 @@ function Reviews() {
               </motion.div>
             </AnimatePresence>
           </div>
+          {/* Responsive navigation buttons sizes */}
           <div className="mt-6 flex items-center justify-center gap-4">
-            <button onClick={() => go(-1)} aria-label="Previous review" className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAE6DF] bg-white transition hover:border-[#D9531D] hover:bg-[#D9531D] hover:text-white"><ChevronLeft className="h-5 w-5" /></button>
+            <button onClick={() => go(-1)} aria-label="Previous review" className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#EAE6DF] bg-white transition hover:border-[#D9531D] hover:bg-[#D9531D] hover:text-white">
+              <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            </button>
             <div className="flex gap-2">
-              {reviews.map((_, i) => <button key={i} onClick={() => setCur(i)} aria-label={`Review ${i + 1}`} className={`h-2.5 rounded-full transition-all ${cur === i ? 'w-7 bg-[#D9531D]' : 'w-2.5 bg-[#EAE6DF]'}`} />)}
+              {reviews.map((_, i) => <button key={i} onClick={() => setCur(i)} aria-label={`Review ${i + 1}`} className={`h-2 rounded-full transition-all ${cur === i ? 'w-6 sm:w-7 bg-[#D9531D]' : 'w-2 bg-[#EAE6DF]'}`} />)}
             </div>
-            <button onClick={() => go(1)} aria-label="Next review" className="flex h-11 w-11 items-center justify-center rounded-full border border-[#EAE6DF] bg-white transition hover:border-[#D9531D] hover:bg-[#D9531D] hover:text-white"><ChevronRight className="h-5 w-5" /></button>
+            <button onClick={() => go(1)} aria-label="Next review" className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#EAE6DF] bg-white transition hover:border-[#D9531D] hover:bg-[#D9531D] hover:text-white">
+              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+            </button>
           </div>
         </div>
       </div>
@@ -583,7 +619,7 @@ function Visit() {
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Timings Card */}
           <Reveal>
-            <div className="h-full space-y-3 rounded-[2rem] border border-[#EAE6DF] bg-white p-6 sm:p-8">
+            <div className="h-full space-y-3 rounded-[2rem] border border-[#EAE6DF] bg-white p-6 sm:p-8 text-left">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <h3 className="flex items-center gap-2 text-xl font-extrabold">
                   <Clock className="h-5 w-5 text-[#D9531D]" />Timings
@@ -628,29 +664,29 @@ function Visit() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
 
-              {/* Floating Address and Direct Directions Link */}
+              {/* Floating Address Card with responsive padding & layouts */}
               <a 
                 href={MAPS} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="group relative m-4 sm:m-6 block rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur-sm border border-[#EAE6DF] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9531D]/30"
+                className="group relative m-3 sm:m-6 block rounded-2xl bg-white/95 p-4 sm:p-5 shadow-xl backdrop-blur-sm border border-[#EAE6DF] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9531D]/30 text-left"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="font-extrabold text-slate-900 text-base">Saashi Clinic</p>
-                    <p className="text-sm text-slate-600 mt-1">Isakhathota Junction, Visakhapatnam</p>
+                    <p className="font-extrabold text-slate-900 text-sm sm:text-base">Saashi Clinic</p>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-1">Isakhathota Junction, Visakhapatnam</p>
                   </div>
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D9531D] text-white shadow-md transition-transform duration-300 group-hover:scale-105">
-                    <MapPin className="h-5 w-5" />
+                  <span className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-[#D9531D] text-white shadow-md transition-transform duration-300 group-hover:scale-105">
+                    <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
                 </div>
                 
                 <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-                  <span className="inline-flex items-center gap-1.5 text-sm font-extrabold text-[#D9531D]">
-                    <Navigation className="h-4 w-4" />
+                  <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold text-[#D9531D]">
+                    <Navigation className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     Get directions
                   </span>
-                  <ArrowRight className="h-4 w-4 text-[#D9531D] transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#D9531D] transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </a>
 
@@ -661,6 +697,7 @@ function Visit() {
     </section>
   );
 }
+
 function FaqSection() {
   return (
     <section className={`${section} !pt-0`}>
@@ -695,10 +732,10 @@ export default function Home() {
         <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[#D9531D] text-white shadow-xl transition-transform hover:scale-110"><MessageCircle className="h-6 w-6" /></span>
       </a>
 
-      {/* Mobile sticky action bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-[#EAE6DF] bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
-        <a href="tel:+919100192367" className="inline-flex h-11 items-center justify-center gap-2 rounded-full border-2 border-[#4A2E1B] text-sm font-black"><Phone className="h-4 w-4" />Call</a>
-        <a href={WA} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#D9531D] text-sm font-black text-white"><MessageCircle className="h-4 w-4" />WhatsApp</a>
+      {/* Mobile sticky action bar: Sized down buttons for smaller screens */}
+      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-[#EAE6DF] bg-white/95 p-2 pb-[max(0.6rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
+        <a href="tel:+919100192367" className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border-2 border-[#4A2E1B] text-xs font-black"><Phone className="h-3.5 w-3.5" />Call</a>
+        <a href={WA} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-[#D9531D] text-xs font-black text-white"><MessageCircle className="h-3.5 w-3.5" />WhatsApp</a>
       </div>
     </div>
   );
