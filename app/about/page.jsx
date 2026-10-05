@@ -439,7 +439,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Marquee ribbon */}
+     {/* Marquee ribbon */}
       <div className="overflow-hidden bg-[#4A2E1B] py-4">
         <motion.div animate={reduce ? {} : { x: ['0%', '-50%'] }} transition={{ duration: 30, ease: 'linear', repeat: Infinity }} className="flex w-max whitespace-nowrap">
           {[...marquee, ...marquee].map((t, i) => (
@@ -451,7 +451,7 @@ export default function About() {
       </div>
 
       {/* 2. VALUES */}
-      <section className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+      <section className="mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-24 md:pb-24">
         <SectionHead tag="What we stand for" title="Care built on three promises" sub="Every visit is shaped by the same principles, whichever doctor you see." />
         <div className="grid gap-6 md:grid-cols-3">
           {pillars.map((p, i) => {
