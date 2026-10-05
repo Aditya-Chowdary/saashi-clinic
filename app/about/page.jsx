@@ -471,7 +471,7 @@ export default function About() {
 
       {/* 3. DOCTORS */}
       <section id="doctors" className="scroll-mt-20 pb-16 md:pb-24">
-        <SectionHead tag="Our doctors" title="The specialists behind your care" sub="Hover over a badge or area of care to learn more." />
+        <SectionHead tag="Our doctors" title="The specialists behind your care" />
         <DoctorsSection />
       </section>
 
