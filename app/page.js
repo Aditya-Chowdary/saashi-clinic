@@ -579,46 +579,88 @@ function Visit() {
     <section className={section}>
       <div className="mx-auto max-w-6xl space-y-12">
         <Head pill="Visit us" title="Clinic hours & location" />
+        
         <div className="grid gap-6 lg:grid-cols-2">
+          {/* Timings Card */}
           <Reveal>
             <div className="h-full space-y-3 rounded-[2rem] border border-[#EAE6DF] bg-white p-6 sm:p-8">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                <h3 className="flex items-center gap-2 text-xl font-extrabold"><Clock className="h-5 w-5 text-[#D9531D]" />Timings</h3>
+                <h3 className="flex items-center gap-2 text-xl font-extrabold">
+                  <Clock className="h-5 w-5 text-[#D9531D]" />Timings
+                </h3>
                 <OpenBadge />
               </div>
               {TIMETABLE.map((row) => {
                 const today = status && row.idx.includes(status.day);
                 return (
-                  <div key={row.days} className={`flex flex-col gap-0.5 rounded-2xl border p-4 transition-colors sm:flex-row sm:items-center sm:justify-between ${today ? 'border-[#D9531D] bg-[#D9531D]/5' : 'border-[#EAE6DF]'}`}>
-                    <span className="flex items-center gap-2 text-sm font-extrabold">{row.days}{today && <span className="rounded-full bg-[#D9531D] px-2 py-0.5 text-[10px] font-black text-white">Today</span>}</span>
+                  <div 
+                    key={row.days} 
+                    className={`flex flex-col gap-0.5 rounded-2xl border p-4 transition-colors sm:flex-row sm:items-center sm:justify-between ${
+                      today ? 'border-[#D9531D] bg-[#D9531D]/5' : 'border-[#EAE6DF]'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2 text-sm font-extrabold">
+                      {row.days}
+                      {today && (
+                        <span className="rounded-full bg-[#D9531D] px-2 py-0.5 text-[10px] font-black text-white">
+                          Today
+                        </span>
+                      )}
+                    </span>
                     <span className="text-sm text-slate-600">{row.t}</span>
                   </div>
                 );
               })}
             </div>
           </Reveal>
+
+          {/* Interactive Map Card */}
           <Reveal delay={0.1}>
-            <a href={MAPS} target="_blank" rel="noopener noreferrer" className="group relative flex h-full min-h-[300px] flex-col justify-end overflow-hidden rounded-[2rem] border border-[#EAE6DF] bg-[#EAE6DF]/50 p-6 sm:p-8">
-              <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(#4A2E1B14_1px,transparent_1px),linear-gradient(90deg,#4A2E1B14_1px,transparent_1px)] [background-size:36px_36px]" />
-              <div className="absolute left-[18%] top-[30%] h-3 w-[60%] -rotate-12 rounded-full bg-white/80" />
-              <div className="absolute left-[45%] top-[8%] h-[70%] w-3 rotate-12 rounded-full bg-white/80" />
-              <div className="absolute left-[46%] top-[34%]">
-                <span className="absolute -inset-3 animate-ping rounded-full bg-[#D9531D]/40 motion-reduce:hidden" />
-                <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#D9531D] text-white shadow-xl"><MapPin className="h-5 w-5" /></span>
-              </div>
-              <div className="relative rounded-2xl bg-white p-4 shadow-lg">
-                <p className="font-extrabold">Saashi Clinic</p>
-                <p className="text-sm text-slate-600">Isakhathota Junction, Visakhapatnam</p>
-                <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-extrabold text-[#D9531D]"><Navigation className="h-4 w-4" />Get directions<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
-              </div>
-            </a>
+            <div className="relative flex h-full min-h-[380px] flex-col justify-end overflow-hidden rounded-[2rem] border border-[#EAE6DF] bg-[#EAE6DF]/30">
+              
+              {/* Real Google Maps Embed Iframe */}
+              <iframe
+                title="Saashi Clinic Location Map"
+                src="https://maps.google.com/maps?q=Saashi%20Clinic,%20Isakhathota%20Junction,%20Visakhapatnam&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                className="absolute inset-0 h-full w-full border-0 grayscale opacity-90 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+              {/* Floating Address and Direct Directions Link */}
+              <a 
+                href={MAPS} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group relative m-4 sm:m-6 block rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur-sm border border-[#EAE6DF] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9531D]/30"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="font-extrabold text-slate-900 text-base">Saashi Clinic</p>
+                    <p className="text-sm text-slate-600 mt-1">Isakhathota Junction, Visakhapatnam</p>
+                  </div>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D9531D] text-white shadow-md transition-transform duration-300 group-hover:scale-105">
+                    <MapPin className="h-5 w-5" />
+                  </span>
+                </div>
+                
+                <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-extrabold text-[#D9531D]">
+                    <Navigation className="h-4 w-4" />
+                    Get directions
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-[#D9531D] transition-transform duration-300 group-hover:translate-x-1" />
+                </div>
+              </a>
+
+            </div>
           </Reveal>
         </div>
       </div>
     </section>
   );
 }
-
 function FaqSection() {
   return (
     <section className={`${section} !pt-0`}>
