@@ -317,17 +317,6 @@ export default function Contact() {
           <Reveal className="space-y-3">{faqs.map((f) => <Faq key={f.q} {...f} />)}</Reveal>
         </div>
       </section>
-
-      {/* CLOSING STRIP */}
-      <section className="px-5 sm:px-6 py-16 md:py-20">
-        <Reveal className="max-w-5xl mx-auto rounded-[2rem] bg-gradient-to-br from-[#D9531D] to-[#b94416] text-white p-8 sm:p-14 text-center space-y-5">
-          <h2 className="text-3xl md:text-4xl font-black">Still have a question?</h2>
-          <p className="text-white/90 max-w-lg mx-auto">Just ask. A short message is all we need to get started.</p>
-          <a href={waUrl('Hello Saashi Clinic, I have a question.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-white text-[#4A2E1B] font-black text-sm hover:bg-[#F5A623] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-            <MessageCircle className="w-5 h-5" /> Ask on WhatsApp
-          </a>
-        </Reveal>
-      </section>
     </div>
   );
 }

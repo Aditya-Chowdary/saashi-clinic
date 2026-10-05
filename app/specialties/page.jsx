@@ -8,6 +8,7 @@ import {
   Smile, Bone, Shield, Activity, Baby, Stethoscope,
   HeartHandshake, Plus, ChevronRight,
 } from 'lucide-react';
+import ortho_paed from '../../public/images/paed-ortho.jpeg';
 
 /* Image with a graceful fallback, so the page looks fine before photos are added.
    Put your photos in /public/images/ using the file names used below. */
@@ -181,7 +182,7 @@ export default function Specialties() {
           className="relative mx-auto w-full max-w-md lg:max-w-none"
         >
           <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl">
-            <Photo src="/images/hero-doctor-child.jpg" alt="Doctor examining a smiling child" emoji="👩🏽‍⚕️" priority className="h-full w-full" />
+            <Photo src={ortho_paed} alt="Doctor examining a smiling child" emoji="👩🏽‍⚕️" priority className="h-full w-full" />
           </div>
           <motion.div
             animate={reduce ? {} : { y: [0, -8, 0] }}
