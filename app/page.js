@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   motion, AnimatePresence, useReducedMotion, useScroll, useSpring, useTransform, useMotionValue,
@@ -31,6 +31,9 @@ const IMG = {
   talk: U('photo-1527613426441-4da17471b66d'),
   clinic: src(clinic) || U('photo-1519494026892-80bbd2d6fd0d', 1200),
 };
+
+// Hero video: put your file at public/videos/clinic.mp4 (webm is optional)
+const VIDEO = { mp4: '/videos/clinic.mp4', webm: '/videos/clinic.webm' };
 
 // Timings: day index (0 = Sunday) -> [[openHour, closeHour], ...] in IST
 const HOURS = { 1: [[10, 13], [17, 20]], 2: [[10, 13], [17, 20]], 3: [[10, 13], [17, 20]], 4: [[10, 13], [17, 20]], 5: [[10, 13], [17, 20]], 6: [[10, 14]], 0: [] };
@@ -200,6 +203,35 @@ function FloatChip({ icon: Icon, title, sub, className, delay, reduce, style }) 
   );
 }
 
+// Looping, muted hero video. Poster = clinic photo (shown while loading / reduced motion).
+function HeroVideo({ reduce }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || reduce) return;
+    v.muted = true; // some browsers need this set in JS for autoplay
+    v.play().catch(() => {}); // if autoplay is blocked, the poster stays visible
+  }, [reduce]);
+
+  return (
+    <video
+      ref={ref}
+      className="h-full w-full object-cover"
+      poster={IMG.clinic}
+      autoPlay={!reduce}
+     
+      muted
+      playsInline
+      preload="metadata"
+      aria-label="Saashi Clinic at Isakhathota Junction, Visakhapatnam"
+    >
+      <source src={VIDEO.webm} type="video/webm" />
+      <source src={VIDEO.mp4} type="video/mp4" />
+    </video>
+  );
+}
+
 function Hero() {
   const reduce = useReducedMotion();
   const mx = useMotionValue(0);
@@ -293,7 +325,8 @@ function Hero() {
               transition={{ duration: 1.1, delay: 0.2, ease: EASE }}
               className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl shadow-[#4A2E1B]/25"
             >
-              <motion.img src={IMG.clinic} alt="Saashi Clinic building at Isakhathota Junction, Visakhapatnam" className="h-full w-full object-cover" initial={{ scale: reduce ? 1 : 1.18 }} animate={{ scale: 1 }} transition={{ duration: 2.2, ease: 'easeOut' }} />
+              {/* Hero video (replaces the old clinic image) */}
+              <HeroVideo reduce={reduce} />
               {!reduce && (
                 <motion.div aria-hidden style={{ skewX: -12 }} initial={{ x: '-150%' }} animate={{ x: '450%' }} transition={{ duration: 1.6, delay: 1.4, ease: 'easeInOut', repeat: Infinity, repeatDelay: 7 }} className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
               )}
@@ -373,13 +406,13 @@ function DoctorFinder() {
             {/* Reduced button styling on mobile viewports */}
             <div className="flex flex-wrap justify-center gap-2.5 lg:justify-start">
               {concerns.map((c, i) => (
-                <button 
-                  key={c.label} 
-                  onClick={() => setSel(i)} 
-                  aria-pressed={sel === i} 
+                <button
+                  key={c.label}
+                  onClick={() => setSel(i)}
+                  aria-pressed={sel === i}
                   className={`rounded-full border-2 px-3 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-extrabold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D] ${
-                    sel === i 
-                      ? 'border-[#D9531D] bg-[#D9531D] text-white shadow-md shadow-[#D9531D]/25' 
+                    sel === i
+                      ? 'border-[#D9531D] bg-[#D9531D] text-white shadow-md shadow-[#D9531D]/25'
                       : 'border-[#EAE6DF] hover:border-[#D9531D]/50'
                   }`}
                 >
@@ -399,10 +432,10 @@ function DoctorFinder() {
                 </div>
               </div>
               {/* Reduced responsive height on smaller screens */}
-              <a 
-                href={wa(`Hello Saashi Clinic, I would like to book an appointment with ${d.name} for: ${concerns[sel].label}.`)} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={wa(`Hello Saashi Clinic, I would like to book an appointment with ${d.name} for: ${concerns[sel].label}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-4 inline-flex h-10 sm:h-12 w-full items-center justify-center gap-2 rounded-full bg-[#D9531D] text-xs sm:text-sm font-black text-white transition hover:bg-[#c24a19]"
               >
                 <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -496,17 +529,17 @@ function Team() {
         <div className="grid gap-8 sm:grid-cols-2">
           {doctors.map((d, i) => (
             <Reveal key={d.name} delay={i * 0.1}>
-              <Link 
-                href={LINKS.about} 
+              <Link
+                href={LINKS.about}
                 className="group block relative overflow-hidden rounded-[2.5rem] border border-[#4A2E1B]/10 bg-white p-4 shadow-[0_12px_40px_rgba(74,46,27,0.03)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#D45225]/30 hover:shadow-[0_20px_50px_rgba(212,82,37,0.08)]"
               >
                 {/* Reduced image footprint with a refined aspect ratio */}
                 <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[2rem] bg-[#4A2E1B]/5">
-                  <img 
-                    src={d.img} 
-                    alt={d.name} 
-                    loading="lazy" 
-                    className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105" 
+                  <img
+                    src={d.img}
+                    alt={d.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   {/* Subtle warm overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#4A2E1B]/10 to-transparent" />
@@ -629,8 +662,8 @@ function Visit() {
               {TIMETABLE.map((row) => {
                 const today = status && row.idx.includes(status.day);
                 return (
-                  <div 
-                    key={row.days} 
+                  <div
+                    key={row.days}
                     className={`flex flex-col gap-0.5 rounded-2xl border p-4 transition-colors sm:flex-row sm:items-center sm:justify-between ${
                       today ? 'border-[#D9531D] bg-[#D9531D]/5' : 'border-[#EAE6DF]'
                     }`}
@@ -665,10 +698,10 @@ function Visit() {
               />
 
               {/* Floating Address Card with responsive padding & layouts */}
-              <a 
-                href={MAPS} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={MAPS}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative m-3 sm:m-6 block rounded-2xl bg-white/95 p-4 sm:p-5 shadow-xl backdrop-blur-sm border border-[#EAE6DF] transition-all duration-300 hover:-translate-y-1 hover:border-[#D9531D]/30 text-left"
               >
                 <div className="flex items-start justify-between gap-4">
