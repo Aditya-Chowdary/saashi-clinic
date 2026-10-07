@@ -5,11 +5,46 @@ import { motion, AnimatePresence, useInView, animate, useReducedMotion } from 'f
 import {
   HeartHandshake, GraduationCap, ShieldCheck, Baby, Bone, Activity, Stethoscope, Wrench, Users,
   ChevronLeft, ChevronRight, ChevronDown, MapPin, Phone, Clock, CalendarCheck,
-  MessageCircle, ArrowUpRight,
+  MessageCircle, ArrowUpRight, Star, Quote,
 } from 'lucide-react';
 // Doctor photo (path is relative to app/about/page.jsx)
 import geshmanjali from '../../public/images/Dr.geshmanjali.jpeg';
 import sunil from '../../public/images/Dr.sunil.jpeg';
+
+/* =====================================================================
+   EDIT THESE: your Instagram + Google details
+   ===================================================================== */
+
+// 1) Instagram account (without the @)
+const INSTAGRAM_HANDLE = 'saashiclinic'; // TODO: replace with your real handle
+const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;
+
+// 2) Reel codes. For a link like https://www.instagram.com/reel/C9xAbCdEfGh/
+//    the code is the part after /reel/  ->  C9xAbCdEfGh
+//    Add as many as you like; they appear in the carousel in this order.
+const REEL_CODES = [
+  'DdwL0mbzkjo', // TODO
+  'Ddtp5_nk3_o', // TODO
+  'DdbmzPDj-oU', // TODO
+  'DdboObszJYY', // TODO
+];
+
+// 3) Google Business Profile
+//    Find your Place ID at: https://developers.google.com/maps/documentation/places/web-service/place-id
+const GOOGLE_PLACE_ID = 'YOUR_GOOGLE_PLACE_ID'; // TODO
+const GOOGLE_REVIEWS_URL = `https://search.google.com/local/reviews?placeid=${GOOGLE_PLACE_ID}`;
+const GOOGLE_WRITE_URL = `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`;
+
+// Overall rating shown in the summary. Leave rating as null to hide the summary until you fill it in.
+const GOOGLE_SUMMARY = { rating: null, count: null }; // e.g. { rating: '4.9', count: 87 }
+
+// Copy real reviews from your Google Business Profile (with the reviewers' permission / as shown publicly).
+// NOTE: these are placeholders. Replace before launch.
+const googleReviews = [
+  { name: 'Patient name', when: '2 months ago', stars: 5, text: 'Replace this with a real Google review about Dr. Geshmanjali and child care at Saashi Clinic.' },
+  { name: 'Patient name', when: '3 months ago', stars: 5, text: 'Replace this with a real Google review about Dr. Sunil and orthopaedic care at Saashi Clinic.' },
+  { name: 'Patient name', when: '4 months ago', stars: 5, text: 'Replace this with a real Google review about the clinic experience and the time the doctors give.' },
+];
 
 /* ---------- doctors section ---------- */
 const geshmanjaliImg =
@@ -313,8 +348,8 @@ function useOpenNow() {
   return open;
 }
 
-/* Scroll-snap carousel: swipe on touch, arrows on desktop, autoplay that pauses on hover */
-function Carousel({ children, itemClass }) {
+/* Scroll-snap carousel: swipe on touch, arrows on desktop, optional autoplay that pauses on hover */
+function Carousel({ children, itemClass, autoplay = true }) {
   const ref = useRef(null);
   const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
@@ -330,10 +365,10 @@ function Carousel({ children, itemClass }) {
   };
 
   useEffect(() => {
-    if (paused || reduce) return;
+    if (!autoplay || paused || reduce) return;
     const id = setInterval(() => go(1), 4500);
     return () => clearInterval(id);
-  }, [paused, reduce]);
+  }, [autoplay, paused, reduce]);
 
   const btn = 'flex h-11 w-11 items-center justify-center rounded-full border border-[#EAE6DF] bg-white text-[#4A2E1B] shadow-sm transition hover:border-[#D9531D] hover:bg-[#D9531D] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#D9531D]';
 
@@ -367,6 +402,197 @@ function FaqItem({ q, a, open, onToggle }) {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+/* ---------- Instagram + Google helpers ---------- */
+// Inline Instagram glyph (newer lucide versions no longer ship brand icons)
+function InstagramIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function Stars({ n = 5, size = 'h-4 w-4' }) {
+  return (
+    <span className="flex gap-0.5" role="img" aria-label={`${n} out of 5 stars`}>
+      {[0, 1, 2, 3, 4].map((i) => (
+        <Star key={i} className={`${size} ${i < n ? 'fill-[#F5A623] text-[#F5A623]' : 'text-[#EAE6DF]'}`} />
+      ))}
+    </span>
+  );
+}
+
+function GoogleG({ className = 'h-10 w-10 text-xl' }) {
+  return (
+    <span className={`flex shrink-0 items-center justify-center rounded-full bg-white font-black text-[#4285F4] shadow ring-1 ring-[#EAE6DF] ${className}`} aria-hidden>G</span>
+  );
+}
+
+function ReelCard({ code }) {
+  return (
+    <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-[#EAE6DF] bg-white shadow-sm">
+      <iframe
+        src={`https://www.instagram.com/reel/${code}/embed`}
+        title={`Saashi Clinic Instagram reel ${code}`}
+        loading="lazy"
+        scrolling="no"
+        allow="encrypted-media; picture-in-picture"
+        allowFullScreen
+        className="h-[480px] w-full border-0 sm:h-[540px]"
+      />
+      <a
+        href={`https://www.instagram.com/reel/${code}/`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex items-center justify-center gap-1.5 border-t border-[#EAE6DF] px-4 py-3 text-xs font-extrabold text-[#D9531D] transition hover:bg-[#FCFAF6]"
+      >
+        Watch on Instagram
+        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </a>
+    </div>
+  );
+}
+
+function InstagramSection() {
+  return (
+    <section className="px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionHead tag="On Instagram" title="Watch our reels" sub="Health tips, clinic moments and patient education from Dr. Geshmanjali and Dr. Sunil." />
+
+        {/* Profile card with follow actions */}
+        <Reveal className="mx-auto mb-10 max-w-3xl">
+          <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#EAE6DF] bg-white p-5 text-center shadow-sm sm:flex-row sm:p-6 sm:text-left">
+            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#F5A623] via-[#D9531D] to-[#C2185B] p-[3px] sm:h-20 sm:w-20">
+              <span className="flex h-full w-full items-center justify-center rounded-full bg-white text-[#D9531D]">
+                <InstagramIcon className="h-7 w-7 sm:h-9 sm:w-9" />
+              </span>
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-base font-extrabold text-[#4A2E1B] sm:text-lg">@{INSTAGRAM_HANDLE}</p>
+              <p className="text-xs text-slate-600 sm:text-sm">Saashi Clinic · Paediatrics &amp; Orthopaedics, Visakhapatnam</p>
+            </div>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#D9531D] to-[#C2185B] px-6 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D]"
+              >
+                <InstagramIcon className="h-4 w-4" />
+                Follow
+              </a>
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#4A2E1B]/20 px-6 py-3 text-sm font-extrabold text-[#4A2E1B] transition hover:border-[#D9531D] hover:text-[#D9531D]"
+              >
+                Open profile
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Reels carousel: 1 on mobile, 2 on tablet, 3 on desktop */}
+        <Carousel autoplay={false} itemClass="w-[82%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+          {REEL_CODES.map((code) => (
+            <ReelCard key={code} code={code} />
+          ))}
+        </Carousel>
+
+        <div className="mt-6 text-center">
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-extrabold text-[#D9531D] hover:underline"
+          >
+            See all reels on Instagram <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GoogleReviewsSection() {
+  return (
+    <section className="bg-white px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionHead tag="Google reviews" title="What patients say about us" sub="Real feedback from families and patients who visited Saashi Clinic." />
+
+        {/* Rating summary + actions */}
+        <Reveal className="mx-auto mb-10 max-w-3xl">
+          <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#EAE6DF] bg-[#FCFAF6] p-5 text-center sm:flex-row sm:justify-between sm:p-6 sm:text-left">
+            <div className="flex items-center gap-4">
+              <GoogleG />
+              {GOOGLE_SUMMARY.rating ? (
+                <div>
+                  <div className="flex items-center justify-center gap-2 sm:justify-start">
+                    <span className="text-3xl font-extrabold text-[#4A2E1B]">{GOOGLE_SUMMARY.rating}</span>
+                    <Stars n={Math.round(Number(GOOGLE_SUMMARY.rating))} />
+                  </div>
+                  {GOOGLE_SUMMARY.count && (
+                    <p className="text-xs text-slate-600">Based on {GOOGLE_SUMMARY.count} Google reviews</p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-left text-sm font-bold text-[#4A2E1B]">Saashi Clinic on Google</p>
+              )}
+            </div>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              <a
+                href={GOOGLE_WRITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D9531D] px-6 py-3 text-sm font-extrabold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#C2481A] hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9531D]"
+              >
+                <Star className="h-4 w-4" />
+                Write a review
+              </a>
+              <a
+                href={GOOGLE_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#4A2E1B]/20 px-6 py-3 text-sm font-extrabold text-[#4A2E1B] transition hover:border-[#D9531D] hover:text-[#D9531D]"
+              >
+                See all reviews
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Review cards: 1 on mobile, 2 on tablet, 3 on desktop */}
+        <Carousel itemClass="w-[88%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+          {googleReviews.map((r, i) => (
+            <figure key={i} className="flex h-full flex-col gap-4 rounded-3xl border border-[#EAE6DF] bg-[#FCFAF6] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#D9531D] hover:shadow-lg">
+              <div className="flex items-center justify-between">
+                <Stars n={r.stars} />
+                <Quote className="h-6 w-6 text-[#D9531D]/40" />
+              </div>
+              <blockquote className="flex-1 text-sm leading-relaxed text-slate-700">{r.text}</blockquote>
+              <figcaption className="flex items-center gap-3 border-t border-[#EAE6DF] pt-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D9531D]/10 text-sm font-extrabold text-[#D9531D]">
+                  {r.name.charAt(0).toUpperCase()}
+                </span>
+                <span className="min-w-0 flex-1 leading-tight">
+                  <span className="block truncate text-sm font-extrabold text-[#4A2E1B]">{r.name}</span>
+                  <span className="block text-xs text-slate-500">{r.when}</span>
+                </span>
+                <GoogleG className="h-7 w-7 text-sm" />
+              </figcaption>
+            </figure>
+          ))}
+        </Carousel>
+      </div>
+    </section>
   );
 }
 
@@ -439,7 +665,7 @@ export default function About() {
         </div>
       </section>
 
-     {/* Marquee ribbon */}
+      {/* Marquee ribbon */}
       <div className="overflow-hidden bg-[#4A2E1B] py-4">
         <motion.div animate={reduce ? {} : { x: ['0%', '-50%'] }} transition={{ duration: 30, ease: 'linear', repeat: Infinity }} className="flex w-max whitespace-nowrap">
           {[...marquee, ...marquee].map((t, i) => (
@@ -536,7 +762,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* 7. PRINCIPLES */}
+      {/* 7. INSTAGRAM REELS (new) */}
+      <InstagramSection />
+
+      {/* 8. PRINCIPLES */}
       <section className="relative overflow-hidden bg-[#4A2E1B] px-6 py-16 text-[#FCFAF6] md:py-24">
         <div className="absolute inset-0 opacity-5 [background-image:radial-gradient(#F5A623_1px,transparent_1px)] [background-size:20px_20px]" />
         <div className="relative mx-auto max-w-5xl">
@@ -554,7 +783,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 8. PATIENT JOURNEY */}
+      {/* 9. PATIENT JOURNEY */}
       <section className="mx-auto max-w-6xl px-6 py-16 md:py-24">
         <SectionHead tag="Your visit" title="What to expect, step by step" />
         <div className="relative grid gap-10 md:grid-cols-4 md:gap-6">
@@ -571,7 +800,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* 9. FAQ */}
+      {/* 10. GOOGLE REVIEWS (new) */}
+      <GoogleReviewsSection />
+
+      {/* 11. FAQ */}
       <section className="bg-slate-50 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-3xl">
           <SectionHead tag="Questions" title="Frequently asked" />
