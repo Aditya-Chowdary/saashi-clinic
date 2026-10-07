@@ -23,8 +23,9 @@ const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}/`;
 //    the code is the part after /reel/  ->  C9xAbCdEfGh
 //    Add as many as you like; they appear in the carousel in this order.
 const REEL_CODES = [
-  'DdwL0mbzkjo', // TODO
+  'Dcv8PyKThZt', // TODO
   'Ddtp5_nk3_o', // TODO
+  'DdwL0mbzkjo', // TODO
   'DdbmzPDj-oU', // TODO
   'DdboObszJYY', // TODO
 ];
